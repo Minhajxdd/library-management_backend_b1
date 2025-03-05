@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './Database/Schemea/user.schmea';
 import { UserRepository } from './Database/Repository/user.repository';
 import { PasswordUtils } from './Utils/password.utils';
+import { CookieUtils } from './Utils/cookie.utils';
 
 @Module({
   imports: [
@@ -24,6 +25,10 @@ import { PasswordUtils } from './Utils/password.utils';
     {
       provide: 'PasswordUtils',
       useClass: PasswordUtils,
+    },
+    {
+      provide: 'CookieUtils',
+      useClass: CookieUtils,
     },
     AuthService,
   ],
