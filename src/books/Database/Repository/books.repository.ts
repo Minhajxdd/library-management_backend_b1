@@ -13,4 +13,30 @@ export class BooksRepository
   constructor(@InjectModel(Book.name) private _booksModel: Model<Book>) {
     super(_booksModel);
   }
+
+  async findAll(
+    query: any,
+    page: number,
+    limit: number,
+  ): Promise<{ data: Book[]; total: number }> {
+    const filter: any = {};
+    if (query.search) {
+      filter['$or'] = [
+        { title: new RegExp(query.search, 'i') },
+        { author: new RegExp(query.search, 'i') },
+      ];
+    }
+
+    if (query.description)
+      filter['description'] = new RegExp(query.description, 'i');
+
+    const total = await this._booksModel.countDocuments(filter);
+
+    const data = await this._booksModel
+      .find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return { data, total };
+  }
 }
