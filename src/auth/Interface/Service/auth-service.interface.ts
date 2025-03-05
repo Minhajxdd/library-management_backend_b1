@@ -1,3 +1,4 @@
+import { Response } from 'express';
 import { RegisterDto } from '../../Dto/register.dto';
 
 export interface IAuthService {
