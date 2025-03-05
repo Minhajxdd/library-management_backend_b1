@@ -6,6 +6,10 @@ import { User, UserSchema } from './Database/Schemea/user.schmea';
 import { UserRepository } from './Database/Repository/user.repository';
 import { PasswordUtils } from './Utils/password.utils';
 import { CookieUtils } from './Utils/cookie.utils';
+import {
+  RefreshToken,
+  RefreshTokenSchema,
+} from './Database/Schemea/refresh-token.schema';
 
 @Module({
   imports: [
@@ -13,6 +17,10 @@ import { CookieUtils } from './Utils/cookie.utils';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: RefreshToken.name,
+        schema: RefreshTokenSchema,
       },
     ]),
   ],
