@@ -3,6 +3,9 @@ export default () => ({
   database: {
     connectionString: process.env.MONGO_URL,
   },
+  jwt: {
+    secret: process.env.JWT_SECRET || 'secret',
+  },
   node_environment: {
     node_env: process.env.NODE_ENV,
   },

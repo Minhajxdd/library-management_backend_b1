@@ -3,6 +3,7 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -10,6 +11,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       isGlobal: true,
       cache: true,
       load: [configuration],
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (config) => ({
+        secret: config.get('jwt.secret'),
+      }),
+      global: true,
+      inject: [ConfigService],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
