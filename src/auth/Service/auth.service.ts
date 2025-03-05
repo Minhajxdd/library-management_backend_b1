@@ -5,9 +5,10 @@ import { IPasswordUtils } from '../Interface/Utils/password-utils.interface';
 import { ICookieUtils } from '../Interface/Utils/cookie-utils.respository';
 import { ITokenUtils } from '../Interface/Utils/token-utils.repository';
 import { Response } from 'express';
+import { IAuthService } from '../Interface/Service/auth-service.interface';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(
     @Inject('UserRepository')
     private readonly _userRepository: IUserRepository,
