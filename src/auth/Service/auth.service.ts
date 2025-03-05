@@ -122,7 +122,6 @@ export class AuthService implements IAuthService {
     });
 
     if (!token) {
-      console.log(`Invalid token called`);
       throw new UnauthorizedException('Invalid Token');
     }
 
@@ -145,6 +144,21 @@ export class AuthService implements IAuthService {
     res.status(HttpStatus.OK).json({
       status: 'success',
       message: 'Refreshed successfully',
+    });
+  }
+
+  async logout(req: Request, res: Response): Promise<void> {
+    const responseRefreshToken = req.cookies['refresh_token'];
+
+    this._cookieUtils.clearCookies(res, ['refresh_token', 'access_token']);
+
+    await this._refreshTokenRepository.delete({
+      token: responseRefreshToken.refreshToken,
+    });
+
+    res.json({
+      status: 'success',
+      message: 'successfully logged out',
     });
   }
 }

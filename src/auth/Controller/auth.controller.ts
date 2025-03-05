@@ -25,4 +25,9 @@ export class AuthController {
   refreshTokens(@Req() req: Request, @Res() res: Response) {
     return this._authService.refreshTokens(req, res);
   }
+
+  @Post('logout')
+  logout(@Req() req: Request, @Res() res: Response) {
+    return this._authService.logout(req, res);
+  }
 }
