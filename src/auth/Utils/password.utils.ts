@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { IPasswordUtils } from '../Interface/Utils/password-utils.interface';
 
 @Injectable()
-export class PasswordUtils {
+export class PasswordUtils implements IPasswordUtils {
   hashPassword(password: string) {
     return bcrypt.hash(password, 10);
   }
