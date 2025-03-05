@@ -10,6 +10,7 @@ import {
   RefreshToken,
   RefreshTokenSchema,
 } from './Database/Schemea/refresh-token.schema';
+import { RefreshTokenRepository } from './Database/Repository/refresh-token.repository';
 
 @Module({
   imports: [
@@ -37,6 +38,10 @@ import {
     {
       provide: 'CookieUtils',
       useClass: CookieUtils,
+    },
+    {
+      provide: 'RefreshTokenRepository',
+      useClass: RefreshTokenRepository,
     },
     AuthService,
   ],
