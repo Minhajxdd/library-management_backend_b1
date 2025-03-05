@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import configuration from 'src/config/configuration';
+import { ICookieUtils } from '../Interface/Utils/cookie-utils.respository';
 
 @Injectable()
-export class CookieUtils {
+export class CookieUtils implements ICookieUtils {
   setCookie(
     res: Response,
     cookies: { name: string; value: string; options?: Record<string, any> }[],
