@@ -12,6 +12,7 @@ import {
 } from './Database/Schemea/refresh-token.schema';
 import { RefreshTokenRepository } from './Database/Repository/refresh-token.repository';
 import { TokenUtils } from './Utils/token.utils';
+import { AuthProfileController } from './Controller/auth-profile.controller';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { TokenUtils } from './Utils/token.utils';
       },
     ]),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, AuthProfileController],
   providers: [
     {
       provide: 'UserRepository',
