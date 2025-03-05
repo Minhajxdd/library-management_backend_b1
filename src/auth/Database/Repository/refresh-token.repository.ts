@@ -11,8 +11,26 @@ export class RefreshTokenRepository
   implements IRefreshTokenRepository
 {
   constructor(
-    @InjectModel(RefreshToken.name) private _refreshToken: Model<RefreshToken>,
+    @InjectModel(RefreshToken.name) private _refreshTokenModel: Model<RefreshToken>,
   ) {
-    super(_refreshToken);
+    super(_refreshTokenModel);
+  }
+
+  async updateOneUpsert(token: string, userId: string): Promise<void> {
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + 3);
+
+    await this._refreshTokenModel.updateOne(
+      { userId },
+      {
+        $set: {
+          expiryDate,
+          token,
+        },
+      },
+      {
+        upsert: true,
+      },
+    );
   }
 }
