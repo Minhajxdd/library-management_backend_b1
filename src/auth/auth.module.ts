@@ -4,6 +4,7 @@ import { AuthController } from './Controller/auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './Database/Schemea/user.schmea';
 import { UserRepository } from './Database/Repository/user.repository';
+import { PasswordUtils } from './Utils/password.utils';
 
 @Module({
   imports: [
@@ -19,6 +20,10 @@ import { UserRepository } from './Database/Repository/user.repository';
     {
       provide: 'UserRepository',
       useClass: UserRepository,
+    },
+    {
+      provide: 'PasswordUtils',
+      useClass: PasswordUtils,
     },
     AuthService,
   ],
