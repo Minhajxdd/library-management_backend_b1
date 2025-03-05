@@ -3,6 +3,7 @@ import { BooksService } from './Service/books.service';
 import { BooksController } from './Controller/books.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Book, BookSchema } from './Database/Schmea/book.schmea';
+import { BooksRepository } from './Database/Repository/books.repository';
 
 @Module({
   imports: [
@@ -14,6 +15,12 @@ import { Book, BookSchema } from './Database/Schmea/book.schmea';
     ]),
   ],
   controllers: [BooksController],
-  providers: [BooksService],
+  providers: [
+    BooksService,
+    {
+      provide: 'BooksRepository',
+      useClass: BooksRepository,
+    },
+  ],
 })
 export class BooksModule {}
