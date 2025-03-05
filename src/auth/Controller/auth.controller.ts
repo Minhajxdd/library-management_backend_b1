@@ -1,14 +1,17 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
-import { AuthService } from '../Service/auth.service';
+import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { RegisterDto } from '../Dto/register.dto';
+import { IAuthService } from '../Interface/Service/auth-service.interface';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    @Inject('AuthService')
+    private readonly _authService: IAuthService,
+  ) {}
 
   @Post('register')
   register(@Body() registerData: RegisterDto, @Res() res: Response) {
-    return this.authService.register(registerData, res);
+    return this._authService.register(registerData, res);
   }
 }

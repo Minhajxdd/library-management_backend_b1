@@ -48,7 +48,10 @@ import { TokenUtils } from './Utils/token.utils';
       provide: 'TokenUtils',
       useClass: TokenUtils,
     },
-    AuthService,
+    {
+      provide: 'AuthService',
+      useClass: AuthService,
+    },
   ],
 })
 export class AuthModule {}
