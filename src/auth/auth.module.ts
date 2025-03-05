@@ -11,6 +11,7 @@ import {
   RefreshTokenSchema,
 } from './Database/Schemea/refresh-token.schema';
 import { RefreshTokenRepository } from './Database/Repository/refresh-token.repository';
+import { TokenUtils } from './Utils/token.utils';
 
 @Module({
   imports: [
@@ -42,6 +43,10 @@ import { RefreshTokenRepository } from './Database/Repository/refresh-token.repo
     {
       provide: 'RefreshTokenRepository',
       useClass: RefreshTokenRepository,
+    },
+    {
+      provide: 'TokenUtils',
+      useClass: TokenUtils,
     },
     AuthService,
   ],
