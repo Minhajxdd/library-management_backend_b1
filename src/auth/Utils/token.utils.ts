@@ -3,9 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 import { v4 as uuidv4 } from 'uuid';
 import { IUserRepository } from '../Interface/Repository/user-repository.interface';
 import { IRefreshTokenRepository } from '../Interface/Repository/refresh-token-repository.interface';
+import { ITokenUtils } from '../Interface/Utils/token-utils.repository';
 
 @Injectable()
-export class TokenUtils {
+export class TokenUtils implements ITokenUtils {
   constructor(
     private jwtService: JwtService,
     @Inject('RefreshTokenRepository')
