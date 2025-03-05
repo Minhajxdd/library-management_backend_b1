@@ -3,15 +3,17 @@ import {
   HttpStatus,
   Inject,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { RegisterDto } from '../Dto/register.dto';
 import { IUserRepository } from '../Interface/Repository/user-repository.interface';
 import { IPasswordUtils } from '../Interface/Utils/password-utils.interface';
 import { ICookieUtils } from '../Interface/Utils/cookie-utils.respository';
 import { ITokenUtils } from '../Interface/Utils/token-utils.repository';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { IAuthService } from '../Interface/Service/auth-service.interface';
 import { LoginDto } from '../Dto/login.dto';
+import { IRefreshTokenRepository } from '../Interface/Repository/refresh-token-repository.interface';
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -24,6 +26,8 @@ export class AuthService implements IAuthService {
     private readonly _cookieUtils: ICookieUtils,
     @Inject('TokenUtils')
     private readonly _tokenUtils: ITokenUtils,
+    @Inject('RefreshTokenRepository')
+    private readonly _refreshTokenRepository: IRefreshTokenRepository,
   ) {}
 
   async register(registerData: RegisterDto, res: Response): Promise<void> {
@@ -106,6 +110,41 @@ export class AuthService implements IAuthService {
     res.status(HttpStatus.OK).json({
       status: 'success',
       message: 'Logged in successfully',
+    });
+  }
+
+  async refreshTokens(req: Request, res: Response): Promise<void> {
+    const responseRefreshToken = req.cookies['refresh_token'] || '';
+
+    const token = await this._refreshTokenRepository.findOne({
+      token: responseRefreshToken,
+      expiryDate: { $gte: new Date() },
+    });
+
+    if (!token) {
+      console.log(`Invalid token called`);
+      throw new UnauthorizedException('Invalid Token');
+    }
+
+    const { accessToken, refreshToken } = await this._tokenUtils.GenerateTokens(
+      token.userId.toString(),
+    );
+
+    this._cookieUtils.setCookie(res, [
+      {
+        name: 'refresh_token',
+        value: refreshToken,
+      },
+      {
+        name: 'access_token',
+        value: accessToken,
+        options: { maxAge: 5 * 60 * 1000 },
+      },
+    ]);
+
+    res.status(HttpStatus.OK).json({
+      status: 'success',
+      message: 'Refreshed successfully',
     });
   }
 }
