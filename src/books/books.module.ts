@@ -5,13 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Book, BookSchema } from './Database/Schmea/book.schmea';
 import { BooksRepository } from './Database/Repository/books.repository';
 import { MulterModule } from '@nestjs/platform-express';
-import multer from 'multer';
 import { ClaudinaryStorageUtils } from './Utils/claudinary-storage.utils';
 
 @Module({
   imports: [
     MulterModule.register({
-      storage: multer?.memoryStorage(),
+      dest: './uploads/profiles',
     }),
     MongooseModule.forFeature([
       {
