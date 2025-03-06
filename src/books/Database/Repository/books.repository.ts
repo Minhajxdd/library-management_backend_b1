@@ -65,4 +65,15 @@ export class BooksRepository
       throw new InternalServerErrorException();
     }
   }
+
+  async toggleBlock(book: Book) {
+    try {
+      const { _id, isBlocked } = book;
+
+      await this.update({ _id }, { isBlocked: !isBlocked });
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException();
+    }
+  }
 }
