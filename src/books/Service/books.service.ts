@@ -85,4 +85,24 @@ export class BooksService {
 
     return books;
   }
+
+  async toggleBlock(id: string) {
+    try {
+      const books = await this._booksRepository.findById(id);
+
+      if (!books) {
+        throw new BadRequestException('No Book Found');
+      }
+
+      await this._booksRepository.toggleBlock(books);
+
+      return {
+        status: 'success',
+        message: 'successfully blocked books',
+      };
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException();
+    }
+  }
 }

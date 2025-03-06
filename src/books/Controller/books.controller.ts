@@ -6,6 +6,7 @@ import {
   Param,
   ParseFilePipeBuilder,
   Post,
+  Put,
   Query,
   UploadedFile,
   UseGuards,
@@ -50,5 +51,10 @@ export class BooksController {
     @Body() createBookDto: CreateBookDto,
   ) {
     return this._booksService.create(file, createBookDto);
+  }
+
+  @Put('block/:id')
+  toggleBlock(@Param('id') id: string) {
+    return this._booksService.toggleBlock(id);
   }
 }
