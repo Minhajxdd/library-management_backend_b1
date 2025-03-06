@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { IBooksRepository } from '../Interface/Repository/books-repository.interface';
 import { Book } from '../Database/Schmea/book.schmea';
 import { CreateBookDto } from '../Dto/create-book.dto';
@@ -72,6 +77,12 @@ export class BooksService {
   }
 
   async findOne(id: string) {
-    return this._booksRepository.findById(id);
+    const books = await this._booksRepository.findById(id);
+
+    if (!books) {
+      throw new BadRequestException('No Book Found');
+    }
+
+    return books;
   }
 }
