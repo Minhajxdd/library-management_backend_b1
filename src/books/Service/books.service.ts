@@ -70,4 +70,8 @@ export class BooksService {
       },
     };
   }
+
+  async findOne(id: string) {
+    return this._booksRepository.findById(id);
+  }
 }

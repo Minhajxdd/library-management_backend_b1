@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
   ParseFilePipeBuilder,
   Post,
   Query,
@@ -18,7 +19,12 @@ import { FileInterceptor } from '@nestjs/platform-express';
 @UseGuards(AuthGuard)
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(private readonly _booksService: BooksService) {}
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this._booksService.findOne(id);
+  }
 
   @Get()
   findAll(
@@ -26,7 +32,7 @@ export class BooksController {
     @Query('page') page = 1,
     @Query('limit') limit = 10,
   ) {
-    return this.booksService.findAll(query, Number(page), Number(limit));
+    return this._booksService.findAll(query, Number(page), Number(limit));
   }
 
   @Post()
@@ -43,6 +49,6 @@ export class BooksController {
     file: Express.Multer.File,
     @Body() createBookDto: CreateBookDto,
   ) {
-    return this.booksService.create(file, createBookDto);
+    return this._booksService.create(file, createBookDto);
   }
 }
