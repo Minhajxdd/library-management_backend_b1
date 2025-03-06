@@ -8,4 +8,11 @@ export interface IBooksRepository extends IGenericRepository<Book> {
     page: number,
     limit: number,
   ): Promise<{ data: Book[]; total: number }>;
+
+  getImageAndUpdate(
+    id: string,
+    image: string,
+  ): Promise<{
+    previousProfile: string;
+  }>;
 }

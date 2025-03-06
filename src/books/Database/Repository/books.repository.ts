@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GenericRepository } from './generic.repository';
@@ -38,5 +42,27 @@ export class BooksRepository
       .limit(limit);
 
     return { data, total };
+  }
+
+  async getImageAndUpdate(
+    id: string,
+    image: string,
+  ): Promise<{
+    previousProfile: string;
+  }> {
+    try {
+      const book = await this._booksModel
+        .findOneAndUpdate({ _id: id }, { $set: { image } }, { new: false })
+        .lean();
+
+      if (!book) {
+        throw new BadRequestException('Invalid Request');
+      }
+
+      return { previousProfile: book.image };
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      throw new InternalServerErrorException();
+    }
   }
 }
