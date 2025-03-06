@@ -15,4 +15,6 @@ export interface IBooksRepository extends IGenericRepository<Book> {
   ): Promise<{
     previousProfile: string;
   }>;
+
+  toggleBlock(book: Book): Promise<void>;
 }
