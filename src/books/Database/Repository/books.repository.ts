@@ -66,7 +66,7 @@ export class BooksRepository
     }
   }
 
-  async toggleBlock(book: Book) {
+  async toggleBlock(book: Book): Promise<void> {
     try {
       const { _id, isBlocked } = book;
 
