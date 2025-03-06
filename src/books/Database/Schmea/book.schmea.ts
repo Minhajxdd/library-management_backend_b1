@@ -5,7 +5,7 @@ export type BookDocument = Book & Document;
 
 @Schema({ timestamps: true })
 export class Book extends Document {
-  @Prop({ required: true })
+  @Prop()
   image: string;
 
   @Prop({ required: true })
