@@ -19,6 +19,9 @@ export class Book extends Document {
 
   @Prop({ required: true, default: 0 })
   quantity: number;
+
+  @Prop({ default: false })
+  isBlocked: boolean;
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);
