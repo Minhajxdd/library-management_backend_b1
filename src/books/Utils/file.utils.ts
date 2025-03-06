@@ -9,8 +9,9 @@ export class FileUtils implements IFileUtils {
 
   async deleteFile(filePath: string): Promise<boolean> {
     try {
+      console.log(__dirname, '../../..', filePath);
       const fullPath = path.resolve(__dirname, '../../..', filePath);
-
+      console.log(fullPath);
       await fs.unlink(fullPath);
       return true;
     } catch (err) {
