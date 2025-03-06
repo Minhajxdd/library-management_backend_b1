@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { v2 as cloudinary } from 'cloudinary';
-import streamifier from 'streamifier';
 
 @Injectable()
 export class ClaudinaryStorageUtils {
@@ -12,19 +11,19 @@ export class ClaudinaryStorageUtils {
     });
   }
 
-  uploadImage = (file: Express.Multer.File): Promise<unknown> => {
+  async uploadImage(file: Express.Multer.File) {
+    const filePath = file.path;
     return new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: 'uploads' },
+      cloudinary.uploader.upload(
+        filePath,
+        { folder: 'TeamBase/Profiles/' },
         (error, result) => {
           if (error) return reject(error);
-          console.log(result);
           resolve(result);
         },
       );
-      streamifier.createReadStream(file.buffer).pipe(stream);
     });
-  };
+  }
 
   async deleteImage(
     url: string,
