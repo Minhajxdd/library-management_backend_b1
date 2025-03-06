@@ -70,7 +70,16 @@ export class BooksRepository
     try {
       const { _id, isBlocked } = book;
 
-      await this.update({ _id }, { isBlocked: !isBlocked });
+      await this._booksModel.findOneAndUpdate(
+        {
+          _id,
+        },
+        {
+          $set: {
+            isBlocked: !isBlocked,
+          },
+        },
+      );
     } catch (err) {
       console.log(err);
       throw new InternalServerErrorException();
