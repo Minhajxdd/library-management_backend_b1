@@ -14,7 +14,7 @@ import { ReturnBookDto } from '../Dto/return-book.dto';
 
 @UseGuards(AuthGuard)
 @Controller('transactions')
-export class UserBorrowController {
+export class UserTransactionBorrowController {
   constructor(
     private readonly _borrowTransactionService: BorrowTransactionService,
   ) {}
