@@ -9,12 +9,17 @@ export class BorrowService {
   ) {}
 
   async getTransactions(userId: string) {
-    const transactions = await this._borrowTransactionRepository.findOne({
-      userId,
-    });
+    const transactions =
+      await this._borrowTransactionRepository.getBooksByPopulate(userId);
 
     if (!transactions) {
       throw new BadRequestException('Borrow is Empty');
     }
+
+    return {
+      status: 'success',
+      message: 'successfully fetched data',
+      data: transactions.books,
+    };
   }
 }
