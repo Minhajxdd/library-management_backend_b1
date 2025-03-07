@@ -21,7 +21,7 @@ export class BorrowedBook {
 export const BorrowedBookSchema = SchemaFactory.createForClass(BorrowedBook);
 
 @Schema({ timestamps: false })
-export class BorrowTransaction {
+export class BorrowTransaction extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   userId: Types.ObjectId;
 
