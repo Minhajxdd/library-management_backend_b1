@@ -7,4 +7,9 @@ export interface IBorrowTransactionRepository
     userId: string,
     newBook: { bookId: string; dueDate: Date; status: string },
   ): Promise<BorrowTransaction>;
+
+  updateBookStatus(
+    transactionId: string,
+    bookId: string,
+  ): Promise<BorrowTransaction | null>;
 }

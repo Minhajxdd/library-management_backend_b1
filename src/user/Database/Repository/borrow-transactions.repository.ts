@@ -29,4 +29,26 @@ export class BorrowTransactionRepository
       )
       .exec();
   }
+
+  async updateBookStatus(
+    transactionId: string,
+    bookId: string,
+  ): Promise<BorrowTransaction | null> {
+    return this._borrowTransactionModel
+      .findOneAndUpdate(
+        {
+          _id: transactionId,
+          'books.bookId': bookId,
+          'books.status': 'borrowed',
+        },
+        {
+          $set: {
+            'books.$.status': 'returned',
+            'books.$.returnedAt': new Date(),
+          },
+        },
+        { new: true },
+      )
+      .exec();
+  }
 }
