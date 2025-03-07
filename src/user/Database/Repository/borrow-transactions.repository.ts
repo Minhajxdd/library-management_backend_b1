@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GenericRepository } from './generic.repository';
-import { BorrowTransaction } from '../Schmea/borrow-transactions.schema';
 import { IBorrowTransactionRepository } from '../../Interface/Database/Repository/book-transaction-repository.interface';
+import { BorrowTransaction } from '../Schmea/borrow-transactions.schema';
 
 @Injectable()
 export class BorrowTransactionRepository
