@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { BorrowTransactionService } from './borro-transaction.service';
+import { BorrowTransactionService } from './borrow-transaction.service';
 import { UserBorrowController } from './Controller/user.transaction.controller';
 
 @Module({
