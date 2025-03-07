@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { IBorrowTransactionRepository } from '../Interface/Database/Repository/book-transaction-repository.interface';
 
 @Injectable()
@@ -47,6 +52,30 @@ export class BorrowTransactionService {
     return {
       status: 'success',
       message: 'successfully borrowed books',
+    };
+  }
+
+  async returnBook(userId: string, bookId: string) {
+    const transaction = await this._borrowTransactionRepository.findOne({
+      userId,
+      'books.bookId': bookId,
+      'books.status': 'borrowed',
+    });
+
+    if (!transaction) {
+      throw new NotFoundException(
+        'No borrowed transaction found for this book',
+      );
+    }
+
+    await this._borrowTransactionRepository.updateBookStatus(
+      String(transaction._id),
+      bookId,
+    );
+
+    return {
+      status: 'succces',
+      message: 'successfully returned',
     };
   }
 }
