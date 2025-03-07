@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { BorrowTransactionService } from './borrow-transaction.service';
+import { BorrowTransactionService } from './Service/borrow-transaction.service';
 import { UserBorrowController } from './Controller/user.transaction.controller';
 import { BorrowTransactionRepository } from './Database/Repository/borrow-transactions.repository';
 import { MongooseModule } from '@nestjs/mongoose';
