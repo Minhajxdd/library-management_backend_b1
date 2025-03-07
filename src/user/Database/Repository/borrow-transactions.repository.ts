@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { GenericRepository } from './generic.repository';
 import { IBorrowTransactionRepository } from '../../Interface/Database/Repository/book-transaction-repository.interface';
 import { BorrowTransaction } from '../Schmea/borrow-transactions.schema';
@@ -15,5 +15,18 @@ export class BorrowTransactionRepository
     private _borrowTransactionModel: Model<BorrowTransaction>,
   ) {
     super(_borrowTransactionModel);
+  }
+
+  async upsertBookToTransaction(
+    userId: string,
+    newBook: { bookId: string; dueDate: Date; status: string },
+  ): Promise<BorrowTransaction> {
+    return this._borrowTransactionModel
+      .findOneAndUpdate(
+        { userId },
+        { $addToSet: { books: newBook } },
+        { upsert: true, new: true },
+      )
+      .exec();
   }
 }
