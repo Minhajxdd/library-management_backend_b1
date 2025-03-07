@@ -51,4 +51,10 @@ export class BorrowTransactionRepository
       )
       .exec();
   }
+
+  getBooksByPopulate(userId: string) {
+    return this._borrowTransactionModel
+      .findOne({ userId })
+      .populate('books.bookId');
+  }
 }

@@ -12,4 +12,6 @@ export interface IBorrowTransactionRepository
     transactionId: string,
     bookId: string,
   ): Promise<BorrowTransaction | null>;
+
+  getBooksByPopulate(userId: string);
 }
