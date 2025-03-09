@@ -54,11 +54,9 @@ export class BooksService {
     const { _id } = await this._booksRepository.create(query);
 
     const { secure_url } = await this._ImageStorageUtils.uploadImage(file);
-    console.log(secure_url);
-    const { previousProfile } = await this._booksRepository.getImageAndUpdate(
-      String(_id),
-      secure_url,
-    );
+
+    const { _id: previusId, previousProfile } =
+      await this._booksRepository.getImageAndUpdate(String(_id), secure_url);
 
     // Cleanup woks in the backgound removing from cloud and local
     if (previousProfile) {
@@ -67,12 +65,12 @@ export class BooksService {
 
     this._fileUtils.deleteFile(file.path);
 
+    const data = await this._booksRepository.findById(previusId);
+
     return {
       status: 'success',
       message: 'updated successfully',
-      data: {
-        imageUrl: secure_url,
-      },
+      data,
     };
   }
 

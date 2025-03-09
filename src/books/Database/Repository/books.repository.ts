@@ -49,6 +49,7 @@ export class BooksRepository
     image: string,
   ): Promise<{
     previousProfile: string;
+    _id: string;
   }> {
     try {
       const book = await this._booksModel
@@ -59,7 +60,7 @@ export class BooksRepository
         throw new BadRequestException('Invalid Request');
       }
 
-      return { previousProfile: book.image };
+      return { previousProfile: book.image, _id: String(book._id) };
     } catch (error) {
       console.error('Error updating profile:', error);
       throw new InternalServerErrorException();
