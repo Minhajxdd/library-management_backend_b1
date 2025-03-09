@@ -4,12 +4,6 @@ import { v2 as cloudinary } from 'cloudinary';
 @Injectable()
 export class ClaudinaryStorageUtils {
   constructor() {
-    console.log(
-      process.env.CLOUDINARY_CLOUD_NAME,
-      process.env.CLOUDINARY_API_KEY,
-      process.env.CLOUDINARY_API_SECRET,
-    );
-
     cloudinary.config({
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
       api_key: process.env.CLOUDINARY_API_KEY,
@@ -19,15 +13,13 @@ export class ClaudinaryStorageUtils {
 
   async uploadImage(file: Express.Multer.File) {
     const filePath = file.path;
-    console.log(filePath);
+
     return new Promise((resolve, reject) => {
       cloudinary.uploader.upload(
         filePath,
         { folder: 'TeamBase/Profiles/' },
         (error, result) => {
-          console.log(error);
           if (error) return reject(error);
-          console.log(result);
           resolve(result);
         },
       );
