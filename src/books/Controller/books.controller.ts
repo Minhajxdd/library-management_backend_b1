@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { BooksService } from '../Service/books.service';
 import { AuthGuard } from 'src/guards/auth.guards';
-import { CreateBookDto } from '../Dto/create-book.dto';
+import { CreateBookBody, CreateBookDto } from '../Dto/create-book.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(AuthGuard)
@@ -48,9 +48,17 @@ export class BooksController {
         }),
     )
     file: Express.Multer.File,
-    @Body() createBookDto: CreateBookDto,
+    @Body() createBookDto: CreateBookBody,
   ) {
-    return this._booksService.create(file, createBookDto);
+    const data: CreateBookDto = {
+      title: createBookDto.title,
+      author: createBookDto.author,
+      description: createBookDto.description,
+      quantity: Number(createBookDto.quantity),
+    };
+    data.quantity = Number(data.quantity);
+
+    return this._booksService.create(file, data);
   }
 
   @Put('block/:id')

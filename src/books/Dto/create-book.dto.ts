@@ -18,3 +18,21 @@ export class CreateBookDto {
   @Min(0)
   quantity: number;
 }
+
+export class CreateBookBody {
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
+  @IsNotEmpty()
+  @IsString()
+  author: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  quantity: string;
+}

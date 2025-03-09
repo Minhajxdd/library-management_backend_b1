@@ -54,7 +54,7 @@ export class BooksService {
     const { _id } = await this._booksRepository.create(query);
 
     const { secure_url } = await this._ImageStorageUtils.uploadImage(file);
-
+    console.log(secure_url);
     const { previousProfile } = await this._booksRepository.getImageAndUpdate(
       String(_id),
       secure_url,
