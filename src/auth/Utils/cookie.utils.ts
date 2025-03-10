@@ -33,7 +33,7 @@ export class CookieUtils implements ICookieUtils {
       }
 
       if (domain) {
-        option += `Domain=${domain};`;
+        // option += `Domain=${domain};`;
       }
 
       return option;
@@ -57,7 +57,7 @@ export class CookieUtils implements ICookieUtils {
       }
 
       if (domain) {
-        option += `Domain=${domain};`;
+        // option += `Domain=${domain};`;
       }
 
       return option;
