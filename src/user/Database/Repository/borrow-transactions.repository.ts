@@ -54,12 +54,7 @@ export class BorrowTransactionRepository
 
   getBooksByPopulate(userId: string) {
     return this._borrowTransactionModel
-      .findOne(
-        { userId, 'books.status': 'borrowed' },
-        {
-          books: { $elemMatch: { status: 'borrowed' } },
-        },
-      )
+      .findOne({ userId })
       .populate('books.bookId');
   }
 }

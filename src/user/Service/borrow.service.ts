@@ -16,10 +16,14 @@ export class BorrowService {
       throw new BadRequestException('Borrow is Empty');
     }
 
+    const books = transactions.books.filter((book: any) => {
+      return book.status === 'borrowed';
+    });
+
     return {
       status: 'success',
       message: 'successfully fetched data',
-      data: transactions.books,
+      data: books,
     };
   }
 }
