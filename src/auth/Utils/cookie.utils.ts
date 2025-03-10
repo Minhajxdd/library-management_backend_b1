@@ -29,7 +29,7 @@ export class CookieUtils implements ICookieUtils {
       option += `SameSite=${isProduction ? 'None' : 'Lax'};`;
 
       if (isProduction) {
-        // option += 'Secure;';
+        option += 'Secure;';
       }
 
       if (domain) {
@@ -53,7 +53,7 @@ export class CookieUtils implements ICookieUtils {
       option += `SameSite=${isProduction ? 'None' : 'Lax'};`;
 
       if (isProduction) {
-        // option += 'Secure;';
+        option += 'Secure;';
       }
 
       if (domain) {
