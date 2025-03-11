@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Inject,
   Param,
   ParseFilePipeBuilder,
   Post,
@@ -16,11 +17,15 @@ import { BooksService } from '../Service/books.service';
 import { AuthGuard } from 'src/guards/auth.guards';
 import { CreateBookBody, CreateBookDto } from '../Dto/create-book.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { IBooksService } from '../Interface/Service/books-service.interface';
 
 @UseGuards(AuthGuard)
 @Controller('books')
 export class BooksController {
-  constructor(private readonly _booksService: BooksService) {}
+  constructor(
+    @Inject('BooksService')
+    private readonly _booksService: IBooksService,
+  ) {}
 
   @Get(':id')
   findOne(@Param('id') id: string) {

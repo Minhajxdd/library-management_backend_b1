@@ -22,7 +22,10 @@ import { FileUtils } from './Utils/file.utils';
   ],
   controllers: [BooksController],
   providers: [
-    BooksService,
+    {
+      provide: 'BooksService',
+      useClass: BooksService,
+    },
     {
       provide: 'BooksRepository',
       useClass: BooksRepository,

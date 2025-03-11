@@ -74,7 +74,7 @@ export class BooksService {
     };
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Book> {
     const books = await this._booksRepository.findById(id);
 
     if (!books) {
